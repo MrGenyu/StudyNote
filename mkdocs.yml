@@ -1,0 +1,40 @@
+# Project information
+site_name: 'Study Note'
+site_author: 'MrGenyu'
+site_url: 'https://MrGenyu.github.io/StudyNote/'
+
+# Repository
+repo_name: 'MrGenyu/StudyNote'
+repo_url: 'https://github.com/MrGenyu/StudyNote'
+
+# Copyright
+copyright: 'Copyright &copy; 2018 MrGenyu'
+
+#pages
+pages:
+    - Home: index.md
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'ja'
+  palette:
+    primary: 'teal'
+    accent: 'teal'
+  font:
+    text: 'Noto Sans JP'
+  logo:
+    icon: 'book'
+extra:
+  search:
+    language: 'jp'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - footnotes
+  - pymdownx.keys
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
