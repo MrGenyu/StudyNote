@@ -13,6 +13,7 @@ copyright: 'Copyright &copy; 2018 MrGenyu'
 #pages
 pages:
     - Home: index.md
+    - MkDocs: mkdocs.md
 
 # Configuration
 theme:
