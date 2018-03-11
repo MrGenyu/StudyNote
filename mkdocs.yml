@@ -13,6 +13,7 @@ copyright: 'Copyright &copy; 2018 MrGenyu'
 #pages
 pages:
     - Home: index.md
+    - Effective C#: effective_csharp_note.md
     - MkDocs: mkdocs.md
 
 # Configuration
@@ -36,6 +37,7 @@ markdown_extensions:
   - footnotes
   - pymdownx.keys
   - codehilite:
+      use_pygments: true
       guess_lang: false
   - toc:
       permalink: true
