@@ -4,7 +4,15 @@
     
     <url>
      <loc>https://MrGenyu.github.io/StudyNote//</loc>
-     <lastmod>2018-03-07</lastmod>
+     <lastmod>2018-03-11</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://MrGenyu.github.io/StudyNote//effective_csharp_note/</loc>
+     <lastmod>2018-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +20,7 @@
     
     <url>
      <loc>https://MrGenyu.github.io/StudyNote//mkdocs/</loc>
-     <lastmod>2018-03-07</lastmod>
+     <lastmod>2018-03-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
