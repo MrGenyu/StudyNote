@@ -426,7 +426,8 @@
 </li>
 <li>
 <p>プロジェクトを作成する。</p>
-<p><code>mkdocs new test</code></p>
+<p><code>bash
+mkdocs new test</code></p>
 </li>
 <li>
 <p>mkdocs.ymlを編集する。</p>
@@ -435,15 +436,15 @@
 <h2 id="github">GitHubへのデプロイ<a class="headerlink" href="#github" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
-<p>デプロイ先のGitHubでPersonal Access Tokenを発行する。</p>
-<p>発行するURLは<a href="https://github.com/settings/tokens">こちら</a>　</p>
+<p>デプロイ先のGitHubで、Personal Access Tokenを発行する。</p>
+<p>発行するURLは<a href="https://github.com/settings/tokens">こちら</a></p>
 </li>
 <li>
 <p>デプロイするリポジトリのRempte Origin URLを下記のように指定する。</p>
-<p><code>git config remote.origin.url https://{token}@github.com/{username}/{project}.git</code>    </p>
+<p><code>git config remote.origin.url https://{token}@github.com/{username}/{project}.git</code></p>
 </li>
 <li>
-<p>Powershellを立ち上げる。下記コマンドで、文字コードをutf-8に変更する。　</p>
+<p>Powershellを立ち上げる。下記コマンドで、文字コードをutf-8に変更する。</p>
 <p><code>chcp 65001</code></p>
 </li>
 <li>
