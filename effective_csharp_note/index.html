@@ -327,6 +327,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#8-use-the-null-conditional-operator-for-event-invocations" title="8. Use the Null Conditional Operator for Event Invocations" class="md-nav__link">
+    8. Use the Null Conditional Operator for Event Invocations
+  </a>
+  
+</li>
+      
       
       
       
@@ -415,6 +422,13 @@
         <li class="md-nav__item">
   <a href="#7-express-callbacks-with-delegates" title="7. Express Callbacks with Delegates" class="md-nav__link">
     7. Express Callbacks with Delegates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-use-the-null-conditional-operator-for-event-invocations" title="8. Use the Null Conditional Operator for Event Invocations" class="md-nav__link">
+    8. Use the Null Conditional Operator for Event Invocations
   </a>
   
 </li>
@@ -594,6 +608,44 @@ Actionは任意の数のパラメータを取り、void戻り型を持つ。  </
 <span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">numbers</span> <span class="p">=</span> <span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">200</span><span class="p">).</span><span class="n">ToList</span><span class="p">();</span>
 <span class="n">numbers</span><span class="p">.</span><span class="n">RemoveAll</span><span class="p">(</span><span class="n">n</span> <span class="p">=&gt;</span> <span class="n">n</span> <span class="p">%</span> <span class="m">2</span> <span class="p">==</span> <span class="m">0</span><span class="p">);</span>                <span class="c1">// Predicate</span>
 <span class="n">numbers</span><span class="p">.</span><span class="n">ForEach</span><span class="p">(</span><span class="n">item</span> <span class="p">=&gt;</span> <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">item</span><span class="p">));</span>  <span class="c1">// Action</span>
+</pre></div>
+
+
+<h2 id="8-use-the-null-conditional-operator-for-event-invocations">8. Use the Null Conditional Operator for Event Invocations<a class="headerlink" href="#8-use-the-null-conditional-operator-for-event-invocations" title="Permanent link">&para;</a></h2>
+<p>自分で定義したイベントを実行する際にはNull演算子(?.)を利用する。<br />
+Updatedというイベントハンドラーがある場合は、Updatedイベントは下記のように実行する。</p>
+<div class="codehilite"><pre><span></span><span class="c1">// 良い例（C#5.0以下の場合）</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">RaiseUpdates</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">counter</span><span class="p">++;</span>
+    <span class="kt">var</span> <span class="n">handler</span> <span class="p">=</span> <span class="n">Updated</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">handler</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="n">handler</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="c1">// 悪い例</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">RaiseUpdates</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">counter</span><span class="p">++;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">Updated</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+        <span class="c1">// 下記ステップ実行時にUpdatedイベントハンドラが、外部からNullに設定されて、</span>
+        <span class="c1">// NullReferenceExceptionが発生する可能性がある。</span>
+        <span class="c1">// （直近でNullチェックをしているので、極まれなケース。。）</span>
+        <span class="n">Updated</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>  
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Null演算子(?.)を利用すれば、下記のように簡単に記述できる。<br />
+下記の場合、Updatedイベントハンドラが、外部からNullに設定されていた場合は、Invoke以降の右辺は実行されず、NullReferenceExceptionが発生しない。</p>
+<div class="codehilite"><pre><span></span><span class="c1">// 良い例（C#6.0以上の場合）</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">RaiseUpdates</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">counter</span><span class="p">++;</span>
+    <span class="n">Updated</span><span class="p">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>  
+<span class="p">}</span>
 </pre></div>
                 
                   
