@@ -176,3 +176,44 @@ List<int> numbers = Enumerable.Range(1, 200).ToList();
 numbers.RemoveAll(n => n % 2 == 0);                // Predicate
 numbers.ForEach(item => Console.WriteLine(item));  // Action
 ```
+
+## 8. Use the Null Conditional Operator for Event Invocations
+
+自分で定義したイベントを実行する際にはNull演算子(?.)を利用する。  
+Updatedというイベントハンドラーがある場合は、Updatedイベントは下記のように実行する。
+
+``` C#
+// 良い例（C#5.0以下の場合）
+public void RaiseUpdates()
+{
+    counter++;
+    var handler = Updated;
+    if (handler != null)
+        handler(this, counter);
+}
+```
+
+``` C#
+// 悪い例
+public void RaiseUpdates()
+{
+    counter++;
+    if (Updated != null)
+        // 下記ステップ実行時にUpdatedイベントハンドラが、外部からNullに設定されて、
+        // NullReferenceExceptionが発生する可能性がある。
+        // （直近でNullチェックをしているので、極まれなケース。。）
+        Updated(this, counter);  
+}
+```
+
+Null演算子(?.)を利用すれば、下記のように簡単に記述できる。  
+下記の場合、Updatedイベントハンドラが、外部からNullに設定されていた場合は、Invoke以降の右辺は実行されず、NullReferenceExceptionが発生しない。
+
+``` C#
+// 良い例（C#6.0以上の場合）
+public void RaiseUpdates()
+{
+    counter++;
+    Updated?.Invoke(this, counter);  
+}
+```
