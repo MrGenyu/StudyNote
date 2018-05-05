@@ -2,15 +2,15 @@
 
 ## 参考サイト
 
- *  [mkdocs.org](http://mkdocs.org)
+* [mkdocs.org](http://mkdocs.org)
 
- *  [DARING FIREBALL](https://daringfireball.net/projects/markdown/)
+* [DARING FIREBALL](https://daringfireball.net/projects/markdown/)
 
     Markdown創始者
-   
- *  [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
 
- *  [MkDocsによるドキュメント作成](https://qiita.com/mebiusbox2/items/a61d42878266af969e3c)
+* [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
+
+* [MkDocsによるドキュメント作成](https://qiita.com/mebiusbox2/items/a61d42878266af969e3c)
 
 ## インストール
 
@@ -25,7 +25,7 @@
 
  1. プロジェクトを作成する。
 
-    ```
+    ``` bash
     mkdocs new test
     ```
 
@@ -33,15 +33,15 @@
 
 ## GitHubへのデプロイ
 
- 1. デプロイ先のGitHubでPersonal Access Tokenを発行する。
-    
-    発行するURLは[こちら](https://github.com/settings/tokens)　
+ 1. デプロイ先のGitHubで、Personal Access Tokenを発行する。
+
+    発行するURLは[こちら](https://github.com/settings/tokens)
 
  1. デプロイするリポジトリのRempte Origin URLを下記のように指定する。
 
-    `git config remote.origin.url https://{token}@github.com/{username}/{project}.git`    
+    `git config remote.origin.url https://{token}@github.com/{username}/{project}.git`
 
- 1. Powershellを立ち上げる。下記コマンドで、文字コードをutf-8に変更する。　
+ 1. Powershellを立ち上げる。下記コマンドで、文字コードをutf-8に変更する。
 
     `chcp 65001`
 

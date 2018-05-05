@@ -1,0 +1,21 @@
+{
+  "cSpell.words": [
+    "Formattable",
+    "LINQ",
+    "Queryable",
+    "chcp",
+    "git",
+    "hub",
+    "mkdocs",
+    "nameof",
+    "readonly"
+  ],
+  "cSpell.ignoreRegExpList": [
+    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"
+  ],
+  "markdownlint.config": {
+    "MD009": {"br_spaces": 2},
+    "MD033": {"allowed_elements": [ "T" ]
+  }
+  }
+}
