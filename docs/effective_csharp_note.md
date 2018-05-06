@@ -180,7 +180,8 @@ numbers.ForEach(item => Console.WriteLine(item));  // Action
 ## 8. Use the Null Conditional Operator for Event Invocations
 
 自分で定義したイベントを実行する際にはNull演算子(?.)を利用する。  
-Updatedというイベントハンドラーがある場合は、Updatedイベントは下記のように実行する。
+
+Updatedというイベントハンドラーを実行しようとした場合、C#5.0までは下記のように記載する。
 
 ``` C#
 // 良い例（C#5.0以下の場合）
@@ -217,3 +218,65 @@ public void RaiseUpdates()
     Updated?.Invoke(this, counter);  
 }
 ```
+
+## 9. Minimize Boxing and Unboxing
+
+Boxingとは、値型を参照型（object型、インターフェイス型）の内部に格納するプロセスのこと。  
+（値は System.Object 内部にラップされ、マネージ ヒープに格納される。）  
+
+``` C#
+int i = 123;
+// The following line boxes i.
+object o = i;  
+```
+
+Unboxとは、Boxを解除するプロセスのこと。  
+（マネージ ヒープに格納された値がコピーされる。）  
+
+``` C#
+o = 123;
+i = (int)o;  // unboxing
+```
+
+簡単な代入と比べて、ボックス化およびボックス化解除は負荷の大きいプロセスなので、使用は最小限にする。  
+以下のようなObjectを引数とする関数では無意識に使用してしまうことがあるので、注意する。
+
+``` C#
+int firstNumber = 5;
+int secondNumber = 10
+// Boxingをしている例
+Console.WriteLine($@"A few numbers:{firstNumber}, {secondNumber}");
+// 良い例
+Console.WriteLine($@"A few numbers:{firstNumber.ToString()}, {secondNumber.ToString()}");
+```
+
+## 10. Use the new Modifier Only to React to Base Class Updates
+
+new修飾子を使用すると、基底クラスから継承されたvirtualでないメンバーを明示的に隠ぺいできる。  
+
+``` C# hl_lines="13"  
+public class MyClass
+{
+    public void MagicMethod()
+    {
+        Console.WriteLine("MyClass");
+        // details elided.
+    }
+}
+
+public class MyOtherClass : MyClass
+{
+    // Redefine MagicMethod for this class.
+    public new void MagicMethod()
+    {
+        Console.WriteLine("MyOtherClass");
+        // details elided
+    }
+}
+```
+
+上記のようなコードは開発者を混乱させる。  
+new修飾子の使用は避けて、MyOtherClassのMagicMethodメソッドは別の名前にしたほうがよい。
+
+new修飾子は、基底クラスにサブクラスで定義していたのと同じ名前のメソッドが追加された場合に使用する。  
+この場合、原則としては自分の定義したメソッドの名前を変更すべきだが、全てを変更するコストが高くつきすぎる場合には、自分のメソッドにnew演算子を追加して、名前を変更せずにメソッドを呼び出せるようにすることができる。  
