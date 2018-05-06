@@ -334,6 +334,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#9-minimize-boxing-and-unboxing" title="9. Minimize Boxing and Unboxing" class="md-nav__link">
+    9. Minimize Boxing and Unboxing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-use-the-new-modifier-only-to-react-to-base-class-updates" title="10. Use the new Modifier Only to React to Base Class Updates" class="md-nav__link">
+    10. Use the new Modifier Only to React to Base Class Updates
+  </a>
+  
+</li>
+      
       
       
       
@@ -429,6 +443,20 @@
         <li class="md-nav__item">
   <a href="#8-use-the-null-conditional-operator-for-event-invocations" title="8. Use the Null Conditional Operator for Event Invocations" class="md-nav__link">
     8. Use the Null Conditional Operator for Event Invocations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-minimize-boxing-and-unboxing" title="9. Minimize Boxing and Unboxing" class="md-nav__link">
+    9. Minimize Boxing and Unboxing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-use-the-new-modifier-only-to-react-to-base-class-updates" title="10. Use the new Modifier Only to React to Base Class Updates" class="md-nav__link">
+    10. Use the new Modifier Only to React to Base Class Updates
   </a>
   
 </li>
@@ -612,8 +640,8 @@ Actionは任意の数のパラメータを取り、void戻り型を持つ。  </
 
 
 <h2 id="8-use-the-null-conditional-operator-for-event-invocations">8. Use the Null Conditional Operator for Event Invocations<a class="headerlink" href="#8-use-the-null-conditional-operator-for-event-invocations" title="Permanent link">&para;</a></h2>
-<p>自分で定義したイベントを実行する際にはNull演算子(?.)を利用する。<br />
-Updatedというイベントハンドラーがある場合は、Updatedイベントは下記のように実行する。</p>
+<p>自分で定義したイベントを実行する際にはNull演算子(?.)を利用する。  </p>
+<p>Updatedというイベントハンドラーを実行しようとした場合、C#5.0までは下記のように記載する。</p>
 <div class="codehilite"><pre><span></span><span class="c1">// 良い例（C#5.0以下の場合）</span>
 <span class="k">public</span> <span class="k">void</span> <span class="nf">RaiseUpdates</span><span class="p">()</span>
 <span class="p">{</span>
@@ -647,6 +675,62 @@ Updatedというイベントハンドラーがある場合は、Updatedイベン
     <span class="n">Updated</span><span class="p">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">counter</span><span class="p">);</span>  
 <span class="p">}</span>
 </pre></div>
+
+
+<h2 id="9-minimize-boxing-and-unboxing">9. Minimize Boxing and Unboxing<a class="headerlink" href="#9-minimize-boxing-and-unboxing" title="Permanent link">&para;</a></h2>
+<p>Boxingとは、値型を参照型（object型、インターフェイス型）の内部に格納するプロセスのこと。<br />
+（値は System.Object 内部にラップされ、マネージ ヒープに格納される。）  </p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">123</span><span class="p">;</span>
+<span class="c1">// The following line boxes i.</span>
+<span class="kt">object</span> <span class="n">o</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span>  
+</pre></div>
+
+
+<p>Unboxとは、Boxを解除するプロセスのこと。<br />
+（マネージ ヒープに格納された値がコピーされる。）  </p>
+<div class="codehilite"><pre><span></span><span class="n">o</span> <span class="p">=</span> <span class="m">123</span><span class="p">;</span>
+<span class="n">i</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">o</span><span class="p">;</span>  <span class="c1">// unboxing</span>
+</pre></div>
+
+
+<p>簡単な代入と比べて、ボックス化およびボックス化解除は負荷の大きいプロセスなので、使用は最小限にする。<br />
+以下のようなObjectを引数とする関数では無意識に使用してしまうことがあるので、注意する。</p>
+<div class="codehilite"><pre><span></span><span class="kt">int</span> <span class="n">firstNumber</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">secondNumber</span> <span class="p">=</span> <span class="m">10</span>
+<span class="c1">// Boxingをしている例</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="err">$</span><span class="s">@&quot;A few numbers:{firstNumber}, {secondNumber}&quot;</span><span class="p">);</span>
+<span class="c1">// 良い例</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="err">$</span><span class="s">@&quot;A few numbers:{firstNumber.ToString()}, {secondNumber.ToString()}&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="10-use-the-new-modifier-only-to-react-to-base-class-updates">10. Use the new Modifier Only to React to Base Class Updates<a class="headerlink" href="#10-use-the-new-modifier-only-to-react-to-base-class-updates" title="Permanent link">&para;</a></h2>
+<p>new修飾子を使用すると、基底クラスから継承されたvirtualでないメンバーを明示的に隠ぺいできる。  </p>
+<div class="codehilite"><pre><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">MyClass</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">MagicMethod</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;MyClass&quot;</span><span class="p">);</span>
+        <span class="c1">// details elided.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyOtherClass</span> <span class="p">:</span> <span class="n">MyClass</span>
+<span class="p">{</span>
+    <span class="c1">// Redefine MagicMethod for this class.</span>
+<span class="hll">    <span class="k">public</span> <span class="k">new</span> <span class="k">void</span> <span class="nf">MagicMethod</span><span class="p">()</span>
+</span>    <span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;MyOtherClass&quot;</span><span class="p">);</span>
+        <span class="c1">// details elided</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>上記のようなコードは開発者を混乱させる。<br />
+new修飾子の使用は避けて、MyOtherClassのMagicMethodメソッドは別の名前にしたほうがよい。</p>
+<p>new修飾子は、基底クラスにサブクラスで定義していたのと同じ名前のメソッドが追加された場合に使用する。<br />
+この場合、原則としては自分の定義したメソッドの名前を変更すべきだが、全てを変更するコストが高くつきすぎる場合には、自分のメソッドにnew演算子を追加して、名前を変更せずにメソッドを呼び出せるようにすることができる。  </p>
                 
                   
                 
